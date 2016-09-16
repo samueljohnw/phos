@@ -1,0 +1,44 @@
+.button{
+  border-radius:2px;
+  background-color:#033F63;
+}
+.sub-menu{
+  width: 100%;
+  border: 1px solid #a5a5a5;
+  padding: 5px;
+  box-shadow: 0 0 1px;
+}
+.login-container
+{
+  box-shadow:0px 0px 5px #333;
+  background: #fff
+}
+.login-container form{
+    padding: 40px 0;
+}
+
+.top-bar ul{
+  background:transparent
+};
+
+.menu > li{
+  margin:0 5px
+}
+.top-bar ul li a {
+  color:#FFF;
+}
+.top-bar ul li a:hover {
+  color:#FFF;
+}
+.auth-login, .top-bar
+{
+  background:url('/bg.png');
+}
+img.logo{
+  filter:invert(100%);
+}
+.reveal{padding:0px;}
+.reveal h1{background:#5E8C6F;padding:0px 20px;color:#fff;}
+.reveal form{margin:20px;}
+.close-button{color:#fff;font-size:1em;}
+h1{font-size:1.8em}
