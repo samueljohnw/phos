@@ -4,7 +4,9 @@ Route::post('chain/{token}',function($token){
   return redirect()->away(chain($token));
 });
 
-
+Route::get('/',function(){
+  return redirect()->to('/login');
+});
 
 Route::group(['middleware' => 'web'], function () {
 
@@ -12,7 +14,7 @@ Route::group(['middleware' => 'web'], function () {
     $chain = \App\Chain::where('token',$token)->first();
     if(is_null($chain))
       abort(503);
-          
+
     return view('partials.form',['token'=>$token]);
   });
 
