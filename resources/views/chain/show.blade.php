@@ -13,10 +13,26 @@ tinymce.init(
   }
 );
 </script>
+<a class="float-right tiny alert button" data-open="deleteModal">Delete Chain</a>
+<div class="reveal" id="deleteModal" data-reveal>
 
+  <form class="" action="{{route('account.{account_id}.chain.destroy',[$account->id,$chain->id])}}" method="post">
+      <h5>Are you sure you want to delete this email chain?</h5>
+      {{csrf_field()}}
+      {{method_field('DELETE')}}
+    <button class="button" type="submit">YES</button>
+  </form>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 <small><a href="{{route('account.index')}}">Accounts</a> <a href="{{route('account.show',$account->id)}}">&rsaquo;&rsaquo; {{$account->name()}}</a> &rsaquo;&rsaquo;<a href="{{route('account.{account_id}.chain.index',$account->id)}}"> Chains</a> &rsaquo;&rsaquo; {{$chain->name}}</small><br/>
+
 <h1>{{$chain->name}}'s Email Chain</h1>
 <div class="row">
+
+
+
   <a class="float-left button" data-open="scheduleModal"><span class="fa fa-email fa-6"></span>Add Message</a>
 
   <div class="reveal" id="scheduleModal" data-reveal>
@@ -27,13 +43,12 @@ tinymce.init(
       <input type="hidden" name="chain_id" value="{{$chain->id}}">
       Subject:
       <input type="text" name="subject" ><br/>
-
       Message:
       <textarea class="wysiwyg" name="body" rows="8" cols="40"></textarea><br/>
       <select id="days" name="days">
         <option value="">Select Days After Signup</option>
         <option value="0">Immediately</option>
-        @for ($i = 1; $i <= 10; $i++)
+        @for ($i = 1; $i <= 60; $i++)
             <option value="{{$i}}">{{$i}}</option>
         @endfor
       </select>
@@ -44,31 +59,16 @@ tinymce.init(
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-
-  <a class="float-right tiny alert button" data-open="deleteModal">Delete Chain</a>
-  <div class="reveal" id="deleteModal" data-reveal>
-
-    <form class="" action="{{route('account.{account_id}.chain.destroy',[$account->id,$chain->id])}}" method="post">
-        <h5>Are you sure you want to delete this email chain?</h5>
-        {{csrf_field()}}
-        {{method_field('DELETE')}}
-      <button class="button" type="submit">YES</button>
-    </form>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
 </div>
 <div class="row">
 
 
-<b class="float-left">Copy and Paste this form:</b>
-
+<small>Copy and paste this form into your website or just send people to this form link.</small>
 <textarea rows="7" id="reaper-form" readonly>
   <form action="{{env("URL")}}/chain/{{$chain->token}}" method="POST"><br/>
     First Name:<input type="text" name="first_name"><br/>
     Last Name:<input type="text" name="last_name"><br/>
-    Email:<input type="email" name="email"><br/>
+    Email:<input type="email" name="email" required="required"><br/>
   <input type="submit" value="submit"><br/>
   </form>
 </textarea>
@@ -80,12 +80,12 @@ tinymce.init(
 
 
 <a target="_blank" href="/form/{{$chain->token}}/">Form Link</a>
-<p>Copy and paste this form into your website or just send people to this form link.</p>
+
 </div>
 <hr>
 @foreach($chain->messages->sortBy('days') as $message)
   <b>{{$message->subject}}</b> - @if($message->days == 0)  Immediately @else{{$message->days}} days later @endif  after signup - <a class="float-right tiny alert button" data-open="deleteMessageModal-{{$message->days}}">Delete Message</a><a class="float-right tiny button" data-open="editMessageModal-{{$message->id}}">Edit Message</a><br/>
-  <div class="reveal" id="deleteMessageModal-{{$message->days}}" data-reveal>            
+  <div class="reveal" id="deleteMessageModal-{{$message->days}}" data-reveal>
     <form class="" action="{{route('account.{account_id}.message.destroy',[$account->id,$message->id])}}" method="post">
         <h5>Are you sure you want to delete this email message?</h5>
         {{csrf_field()}}
