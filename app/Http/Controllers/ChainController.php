@@ -17,13 +17,13 @@ class ChainController extends Controller
      */
     public function index($account_id)
     {
-      $account = Account::find($account_id);
-      $chains = Chain::where('account_id',$account_id)->get();
 
-      if (\Gate::denies('show', $account)) {
+      $account = Account::find($account_id);
+      $chains = Chain::where('account_id',$account_id)->with('contacts')->get();
+
+      if (\Gate::denies('show', $account))
         abort(403);
-      }
-      
+
       return view('chain.index',compact('chains','account'));
     }
 

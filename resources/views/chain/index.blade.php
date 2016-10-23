@@ -32,13 +32,14 @@
   </thead>
   <tbody>
     @foreach($chains as $chain)
+
     <tr>
       <td>
           <a href="/account/{{$account->id}}/chain/{{$chain->id}}">{{$chain->name}}</a><br/>
       </td>
       <td>
-        {{$chain->contacts()->count()}}
-      </td>    
+        {{$chain->contacts()->groupBy('contact_id')->get()->count()}}
+      </td>
     </tr>
     @endforeach
   </tbody>
